@@ -1,5 +1,4 @@
 package app.controllers;
-
 import app.models.Supplier;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,25 +9,40 @@ public class SupplierController {
     @FXML private TableView<Supplier> suppliersTable;
     @FXML private TableColumn<Supplier, Number> idColumn;
     @FXML private TableColumn<Supplier, String> nameColumn;
-    // Add other columns...
+    @FXML private TableColumn<Supplier, String> contactColumn;
+    @FXML private TableColumn<Supplier, String> phoneColumn;
+    @FXML private TableColumn<Supplier, Number> ratingColumn;
 
     @FXML private TextField nameField, contactField, phoneField, emailField, addressField;
     @FXML private Spinner<Double> ratingSpinner;
 
     private final ObservableList<Supplier> suppliers = FXCollections.observableArrayList();
 
+    // Keep track of the supplier selected for update
+    private Supplier selectedSupplier;
+
     @FXML
     public void initialize() {
         // Configure table columns
         idColumn.setCellValueFactory(cellData -> cellData.getValue().supplierIdProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        // Configure other columns...
+        contactColumn.setCellValueFactory(cellData -> cellData.getValue().contactPersonProperty());
+        phoneColumn.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
+        ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
 
-        // Set up rating spinner (0-5 scale)
+        // Configure the rating spinner (0-5 scale)
         ratingSpinner.setValueFactory(
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 5, 3, 0.5));
 
         suppliersTable.setItems(suppliers);
+
+        // Listen for table selection to load supplier details for editing
+        suppliersTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedSupplier = newSelection;
+                loadSupplierDetails(selectedSupplier);
+            }
+        });
     }
 
     @FXML
@@ -42,10 +56,53 @@ public class SupplierController {
                 addressField.getText(),
                 ratingSpinner.getValue(),
                 true
-                );
+        );
+        if (newSupplier.validate()) {
+            suppliers.add(newSupplier);
+            clearFields();
+        } else {
+            showAlert("Validation Error", "Please check the supplier details.");
+        }
+    }
 
-        suppliers.add(newSupplier);
-        clearFields();
+    @FXML
+    private void updateSupplier() {
+        if (selectedSupplier != null) {
+            selectedSupplier.setName(nameField.getText());
+            selectedSupplier.setContactPerson(contactField.getText());
+            selectedSupplier.setPhone(phoneField.getText());
+            selectedSupplier.setEmail(emailField.getText());
+            selectedSupplier.setAddress(addressField.getText());
+            selectedSupplier.setRating(ratingSpinner.getValue());
+            if (selectedSupplier.validate()) {
+                suppliersTable.refresh();
+                clearFields();
+            } else {
+                showAlert("Validation Error", "Please check the supplier details.");
+            }
+        } else {
+            showAlert("No Selection", "Please select a supplier to update.");
+        }
+    }
+
+    @FXML
+    private void deleteSupplier() {
+        Supplier supplierToDelete = suppliersTable.getSelectionModel().getSelectedItem();
+        if (supplierToDelete != null) {
+            suppliers.remove(supplierToDelete);
+            clearFields();
+        } else {
+            showAlert("No Selection", "Please select a supplier to delete.");
+        }
+    }
+
+    private void loadSupplierDetails(Supplier supplier) {
+        nameField.setText(supplier.getName());
+        contactField.setText(supplier.getContactPerson());
+        phoneField.setText(supplier.getPhone());
+        emailField.setText(supplier.getEmail());
+        addressField.setText(supplier.getAddress());
+        ratingSpinner.getValueFactory().setValue(supplier.getRating());
     }
 
     private void clearFields() {
@@ -55,5 +112,14 @@ public class SupplierController {
         emailField.clear();
         addressField.clear();
         ratingSpinner.getValueFactory().setValue(3.0);
+        suppliersTable.getSelectionModel().clearSelection();
+        selectedSupplier = null;
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
