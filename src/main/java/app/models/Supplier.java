@@ -43,7 +43,6 @@ public class Supplier {
     // ====================
     // Property Accessors
     // ====================
-
     public IntegerProperty supplierIdProperty() {
         return supplierId;
     }
@@ -79,7 +78,6 @@ public class Supplier {
     // ====================
     // Standard Getters
     // ====================
-
     public int getSupplierId() {
         return supplierId.get();
     }
@@ -115,7 +113,6 @@ public class Supplier {
     // ====================
     // Standard Setters
     // ====================
-
     public void setSupplierId(int supplierId) {
         this.supplierId.set(supplierId);
     }
@@ -153,15 +150,28 @@ public class Supplier {
     // ====================
 
     /**
-     * Validates supplier data before saving
-     * @return true if all required fields are valid
+     * Validates supplier data before saving.
+     * This version only checks that:
+     * - The 'name' does not contain any digits.
+     * - The 'contactPerson' does not contain any digits.
+     * - The 'phone' contains only numeric digits.
+     *
+     * @return true if all validations pass; false otherwise.
      */
     public boolean validate() {
-        return !name.get().isEmpty()
-                && !contactPerson.get().isEmpty()
-                && phone.get().matches("^[+0-9\\s]{8,}$")
-                && email.get().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
-                && rating.get() >= 0 && rating.get() <= 5;
+        // Check that the name does NOT contain any digits.
+        if (name.get().matches(".*\\d.*")) {
+            return false;
+        }
+        // Check that the contact person does NOT contain any digits.
+        if (contactPerson.get().matches(".*\\d.*")) {
+            return false;
+        }
+        // Check that the phone field contains only digits.
+        if (!phone.get().matches("\\d+")) {
+            return false;
+        }
+        return true;
     }
 
     /**

@@ -11,20 +11,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="416.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.SupplierController">
+<AnchorPane prefHeight="416.0" prefWidth="797.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="app.controllers.SupplierController">
+    <!-- Title -->
+    <Label layoutX="22.0" layoutY="26.0" text="Supplier Management" textFill="#921212">
+        <font>
+            <Font size="30.0" />
+        </font>
+    </Label>
 
+    <!-- TableView displaying supplier details -->
     <TableView fx:id="suppliersTable" layoutX="330.0" layoutY="95.0" prefHeight="270.0" prefWidth="414.0">
         <columns>
             <TableColumn fx:id="idColumn" prefWidth="50" text="ID" />
-            <TableColumn fx:id="nameColumn" prefWidth="92.00006103515625" text="Supplier Name" />
-            <TableColumn fx:id="contactColumn" prefWidth="99.20001220703125" text="Contact Person" />
-            <TableColumn fx:id="phoneColumn" prefWidth="83.2000732421875" text="Phone" />
-            <TableColumn fx:id="ratingColumn" prefWidth="88.00006103515625" text="Rating" />
+            <TableColumn fx:id="nameColumn" prefWidth="92" text="Supplier Name" />
+            <TableColumn fx:id="contactColumn" prefWidth="99" text="Contact Person" />
+            <TableColumn fx:id="phoneColumn" prefWidth="83" text="Phone" />
+            <TableColumn fx:id="emailColumn" prefWidth="120" text="Email" />
+            <TableColumn fx:id="addressColumn" prefWidth="120" text="Address" />
+            <TableColumn fx:id="ratingColumn" prefWidth="88" text="Rating" />
         </columns>
     </TableView>
 
+    <!-- Form and CRUD buttons -->
     <VBox layoutX="14.0" layoutY="81.0" spacing="10">
-        <Label style="-fx-font-weight: bold;" text="Add New Supplier" />
+        <Label style="-fx-font-weight: bold;" text="Add / Update Supplier" />
 
         <HBox spacing="10">
             <Label prefWidth="100" text="Name:" />
@@ -56,11 +69,11 @@
             <Spinner fx:id="ratingSpinner" prefWidth="100" />
         </HBox>
 
-        <Button onAction="#addSupplier" style="-fx-base: #921212;" text="Add Supplier" />
+        <!-- CRUD Buttons -->
+        <HBox spacing="10">
+            <Button onAction="#addSupplier" style="-fx-base: #921212;" text="Add Supplier" />
+            <Button onAction="#updateSupplier" text="Update Supplier" />
+            <Button onAction="#deleteSupplier" text="Delete Supplier" />
+        </HBox>
     </VBox>
-   <Label layoutX="22.0" layoutY="26.0" text="Supplier Management" textFill="#921212">
-      <font>
-         <Font size="30.0" />
-      </font>
-   </Label>
 </AnchorPane>
