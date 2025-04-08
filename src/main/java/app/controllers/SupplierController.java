@@ -21,12 +21,10 @@ public class SupplierController {
 
     private final ObservableList<Supplier> suppliers = FXCollections.observableArrayList();
 
-    // Keep track of the supplier selected for update
     private Supplier selectedSupplier;
 
     @FXML
     public void initialize() {
-        // Configure table columns to bind to corresponding Supplier properties
         idColumn.setCellValueFactory(cellData -> cellData.getValue().supplierIdProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         contactColumn.setCellValueFactory(cellData -> cellData.getValue().contactPersonProperty());
@@ -35,14 +33,11 @@ public class SupplierController {
         addressColumn.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
         ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
 
-        // Configure the rating spinner (0-5 scale with default 3 and step of 0.5)
         ratingSpinner.setValueFactory(
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 5, 3, 0.5));
 
-        // Set the suppliers list into the TableView
         suppliersTable.setItems(suppliers);
 
-        // Listen for table selection to load supplier details for editing
         suppliersTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedSupplier = newSelection;
@@ -102,7 +97,6 @@ public class SupplierController {
         }
     }
 
-    // Loads the details of the selected supplier into the form fields.
     private void loadSupplierDetails(Supplier supplier) {
         nameField.setText(supplier.getName());
         contactField.setText(supplier.getContactPerson());
@@ -112,7 +106,6 @@ public class SupplierController {
         ratingSpinner.getValueFactory().setValue(supplier.getRating());
     }
 
-    // Clears the input fields and resets the table selection.
     private void clearFields() {
         nameField.clear();
         contactField.clear();
@@ -124,7 +117,6 @@ public class SupplierController {
         selectedSupplier = null;
     }
 
-    // Utility method to display alert dialogs.
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

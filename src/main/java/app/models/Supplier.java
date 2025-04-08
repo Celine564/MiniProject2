@@ -2,10 +2,7 @@ package app.models;
 
 import javafx.beans.property.*;
 
-/**
- * Represents a supplier business entity with observable properties
- * for integration with JavaFX applications.
- */
+
 public class Supplier {
     private final IntegerProperty supplierId;
     private final StringProperty name;
@@ -16,17 +13,6 @@ public class Supplier {
     private final DoubleProperty rating;
     private final BooleanProperty isActive;
 
-    /**
-     * Constructor for Supplier with all properties
-     * @param supplierId Unique identifier
-     * @param name Supplier name
-     * @param contactPerson Primary contact name
-     * @param phone Contact phone number
-     * @param email Contact email
-     * @param physicalAddress Business address
-     * @param rating Performance rating (0-5 scale)
-     * @param isActive Whether supplier is currently active
-     */
     public Supplier(int supplierId, String name, String contactPerson,
                     String phone, String email, String physicalAddress,
                     double rating, boolean isActive) {
@@ -40,9 +26,6 @@ public class Supplier {
         this.isActive = new SimpleBooleanProperty(isActive);
     }
 
-    // ====================
-    // Property Accessors
-    // ====================
     public IntegerProperty supplierIdProperty() {
         return supplierId;
     }
@@ -75,9 +58,6 @@ public class Supplier {
         return isActive;
     }
 
-    // ====================
-    // Standard Getters
-    // ====================
     public int getSupplierId() {
         return supplierId.get();
     }
@@ -110,9 +90,6 @@ public class Supplier {
         return isActive.get();
     }
 
-    // ====================
-    // Standard Setters
-    // ====================
     public void setSupplierId(int supplierId) {
         this.supplierId.set(supplierId);
     }
@@ -145,38 +122,16 @@ public class Supplier {
         this.isActive.set(isActive);
     }
 
-    // ====================
-    // Business Logic Methods
-    // ====================
-
-    /**
-     * Validates supplier data before saving.
-     * This version only checks that:
-     * - The 'name' does not contain any digits.
-     * - The 'contactPerson' does not contain any digits.
-     * - The 'phone' contains only numeric digits.
-     *
-     * @return true if all validations pass; false otherwise.
-     */
     public boolean validate() {
-        // Check that the name does NOT contain any digits.
         if (name.get().matches(".*\\d.*")) {
             return false;
         }
-        // Check that the contact person does NOT contain any digits.
         if (contactPerson.get().matches(".*\\d.*")) {
             return false;
         }
-        // Check that the phone field contains only digits.
-        if (!phone.get().matches("\\d+")) {
-            return false;
-        }
-        return true;
+        return phone.get().matches("\\d+");
     }
 
-    /**
-     * Returns a summary string for quick identification
-     */
     public String getSummary() {
         return String.format("%s (ID: %d) - %s",
                 name.get(), supplierId.get(), contactPerson.get());

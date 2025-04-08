@@ -15,14 +15,12 @@
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="app.controllers.SupplierController">
-    <!-- Title -->
     <Label layoutX="22.0" layoutY="26.0" text="Supplier Management" textFill="#921212">
         <font>
             <Font size="30.0" />
         </font>
     </Label>
 
-    <!-- TableView displaying supplier details -->
     <TableView fx:id="suppliersTable" layoutX="330.0" layoutY="95.0" prefHeight="270.0" prefWidth="414.0">
         <columns>
             <TableColumn fx:id="idColumn" prefWidth="50" text="ID" />
@@ -35,7 +33,6 @@
         </columns>
     </TableView>
 
-    <!-- Form and CRUD buttons -->
     <VBox layoutX="14.0" layoutY="81.0" spacing="10">
         <Label style="-fx-font-weight: bold;" text="Add / Update Supplier" />
 
@@ -69,7 +66,6 @@
             <Spinner fx:id="ratingSpinner" prefWidth="100" />
         </HBox>
 
-        <!-- CRUD Buttons -->
         <HBox spacing="10">
             <Button onAction="#addSupplier" style="-fx-base: #921212;" text="Add Supplier" />
             <Button onAction="#updateSupplier" text="Update Supplier" />
