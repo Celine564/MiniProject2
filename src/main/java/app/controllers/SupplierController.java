@@ -49,7 +49,7 @@ public class SupplierController {
     @FXML
     private void addSupplier() {
         Supplier newSupplier = new Supplier(
-                suppliers.size() + 1, // Auto-generated ID
+                suppliers.size() + 1, 
                 nameField.getText(),
                 contactField.getText(),
                 phoneField.getText(),
