@@ -12,8 +12,8 @@ public class SupplierController {
     @FXML private TableColumn<Supplier, String> nameColumn;
     @FXML private TableColumn<Supplier, String> contactColumn;
     @FXML private TableColumn<Supplier, String> phoneColumn;
-    @FXML private TableColumn<Supplier, String> emailColumn;      // New: Email Column
-    @FXML private TableColumn<Supplier, String> addressColumn;    // New: Address Column
+    @FXML private TableColumn<Supplier, String> emailColumn;      
+    @FXML private TableColumn<Supplier, String> addressColumn;    
     @FXML private TableColumn<Supplier, Number> ratingColumn;
 
     @FXML private TextField nameField, contactField, phoneField, emailField, addressField;
